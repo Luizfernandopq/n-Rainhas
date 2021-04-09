@@ -55,7 +55,7 @@ struct iterador{
                 //f0.adicionaCaminho(x, y, j);
                 posicionaRainha(x, y, nRainhas);
                 if(f0.atualizaPontuacao(true)){
-                    //cout << "\nA formiga nº " << i+1 << " obteve sucesso \n";
+                    cout << "\nA formiga nº " << i+1 << " obteve sucesso \n";
                     f0.imprimeCaminho();
                     imprimeProbabilidade(nRainhas);
                     return f0;
