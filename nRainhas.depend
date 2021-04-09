@@ -1,0 +1,31 @@
+# depslib dependency file v1.0
+1617958542 source:c:\users\luiz fernando\desktop\nrainhas\main.cpp
+	"tabuleiro.cpp"
+	"ambiente.cpp"
+
+1617909541 c:\users\luiz fernando\desktop\nrainhas\tabuleiro.cpp
+	<iostream>
+	<cstdlib>
+
+1617961471 c:\users\luiz fernando\desktop\nrainhas\formigueiro.cpp
+	<iostream>
+	<cstdlib>
+	<cmath>
+	<ctime>
+
+1617909541 source:c:\users\luiz fernando\desktop\nrainhas\tabuleiro.cpp
+	<iostream>
+	<cstdlib>
+
+1617959558 source:c:\users\luiz fernando\desktop\nrainhas\ambiente.cpp
+	"formigueiro.cpp"
+
+1617960154 source:c:\users\luiz fernando\desktop\nrainhas\formigueiro.cpp
+	<iostream>
+	<cstdlib>
+	<cmath>
+	<ctime>
+
+1617961424 c:\users\luiz fernando\desktop\nrainhas\ambiente.cpp
+	"formigueiro.cpp"
+
