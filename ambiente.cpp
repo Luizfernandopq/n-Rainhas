@@ -6,6 +6,8 @@ struct iterador{
     float **matrizFeromonio;
     float **matrizProbabilidade;
     formiga melhorFormiga;
+    float valoresSorteados[10000] = {0};
+    int sorteados = 0;
 
     void init(int nFormigas,int iteracoes,int nRainhas, bool resolve){
             matrizFeromonio = (float**)malloc(nRainhas * sizeof(float*));
@@ -21,16 +23,21 @@ struct iterador{
 
             if(resolve){
                 inicializaFeromonio(nRainhas);
-                inicializaProbabilidade(nRainhas);
                 for(int i = 0; i < iteracoes; i++){
+                    inicializaProbabilidade(nRainhas);
                     melhorFormiga = iteracao(nFormigas, nRainhas);
                     if(melhorFormiga.atualizaPontuacao(false)){
-                        cout << "na iteracao " << i+1 << endl;
+                        cout << "na iteracao " << i+1 << "\nnumero de sorteios: "<< sorteados << endl;
                         break;
                     }
                     atualizaMatrizFeromonio(nRainhas, melhorFormiga);
+
                 }
                 melhorFormiga.imprimeTabuleiro();
+                //melhorFormiga.imprimeCaminho();
+                //imprimeProbabilidade(nRainhas);
+                imprimeFeromonio(nRainhas);
+                cout << "\nRainhas colocadas: " << melhorFormiga.pontuacao << endl;
             //imprimeProbabilidade(nRainhas);
 
             }
@@ -44,23 +51,23 @@ struct iterador{
         f0.init(nRainhas);
         float roleta;
         int xy,x,y;
-        srand(time(NULL));
-        rand();
         for(int i = 0; i < nFormigas; i++){
             for(int j = 0; j < nRainhas; j++){
-                roleta = (float(rand()%10001) / 10000);
+                roleta = randomico(1);
                 //imprimeProbabilidade(nRainhas);
                 xy = pesquisaPosXY(roleta, nRainhas);
                 //cout<< "\n xy: "<< xy << "\n";
                 x = xy % nRainhas;
                 y = xy / nRainhas;
-                //cout << "roleta2: " << x << " " << y << endl;
+                //cout << "posição sorteada: " << x << " " << y << "  " << roleta << endl;
 
+                if(!posicionaRainha(x, y, nRainhas)){
+                    continue;
+                }
                 f0.adicionaCaminho(x, y, j);
-                posicionaRainha(x, y, nRainhas);
                 if(f0.atualizaPontuacao(true)){
-                    cout << "\nA formiga " << i+1 << " obteve sucesso \n";
-                    f0.imprimeCaminho();
+                    cout << "\nA formiga " << i+1 << " obteve sucesso ";
+                    //f0.imprimeCaminho();
                     //imprimeProbabilidade(nRainhas);
                     return f0;
                 }
@@ -81,17 +88,15 @@ struct iterador{
     void inicializaFeromonio(int nRainhas){
         for (int i = 0; i < nRainhas; i++){
             for (int j = 0; j< nRainhas; j++){
-                matrizFeromonio[i][j] = 0.2f;
+                matrizFeromonio[i][j] = 5.0f + nRainhas;
             }
         }
     }
     void inicializaProbabilidade(int nRainhas){
 
-        srand(time(NULL));
-        rand();
         float alfa, beta = 0;
-        alfa = (float(rand()%20001) / 10000);
-        beta = (float(rand()%10001) / 10000);
+        alfa = randomico(4);
+        beta = randomico(4);
         //cout << alfa << "\n" << beta << "\n" << endl;
 
         for (int i = 0; i < nRainhas; i++){
@@ -127,10 +132,14 @@ struct iterador{
     void atualizaMatrizFeromonio(int nRainhas, formiga f){
         for (int i = 0; i < nRainhas; i++){
             for (int j = 0; j< nRainhas; j++){
-                matrizFeromonio[i][j] -= 0.02f;
+                if(matrizFeromonio[i][j] >= 1.0f){
+                    matrizFeromonio[i][j] -= 1.0f;
+                }else {
+                    matrizFeromonio[i][j] = 0;
+                }
             }
             if(i < f.pontuacao){
-                matrizFeromonio[f.caminhoY[i]][f.caminhoX[i]] += 0.4f;
+                matrizFeromonio[f.caminhoY[i]][f.caminhoX[i]] += 2.0f;
             }
         }
     }
@@ -150,6 +159,9 @@ struct iterador{
     int posicionaRainha(int x, int y, int nRainhas){
         int contradicGerada = 0;
 
+        if(matrizProbabilidade[y][x] == -1){
+            return 0;
+        }
         for (int i  = 0; i < nRainhas; i++){
 
             //linha
@@ -187,6 +199,7 @@ struct iterador{
                 //cout << "roleta: " << roleta << "   " << matrizProbabilidade[i][j] << "    " << i << " " << j << endl;
 
                 if(roleta <= matrizProbabilidade[i][j] && matrizProbabilidade[i][j] != -1){
+                    //cout<< "simm\n\n";
                     return i * nRainhas + j;
                 }
             }
@@ -207,6 +220,18 @@ struct iterador{
 
     }
 
+        void imprimeFeromonio(int nRainhas){
+
+        for (int i = 0; i < nRainhas; i++){
+            for (int j = 0; j< nRainhas; j++){
+                //cout << matrizProbabilidade[nRainhas - (i+1)][j] << "   ";
+                cout << matrizFeromonio[i][j] << "  ";
+            }
+            cout << "\n" <<endl;
+        }
+
+    }
+
     int contradicoesNaPosicao(int x, int y, int nRainhas){
         iterador it0;
         it0.init(1, 1, nRainhas, false);
@@ -219,4 +244,20 @@ struct iterador{
         free(matrizProbabilidade);
         free(matrizFeromonio);
     }
+
+    float randomico(int intMax){
+        rand();
+        if(sorteados >= 10000){
+            sorteados = 0;
+        }
+        float novo = intMax * (float(rand()%100001) / 100000);
+        for(int i = 0; i <= sorteados; i++){
+            if(novo == valoresSorteados[i]){
+                return randomico(intMax);
+            }
+        }
+        valoresSorteados[sorteados++] = novo;
+        return novo;
+    }
+
 };

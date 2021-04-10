@@ -3,7 +3,7 @@
 using namespace std;
 
 int main(int argc, char *argv[]){
-
+    srand(time(NULL));
     /*
     formiga f;
     f.init(5);
@@ -19,15 +19,19 @@ int main(int argc, char *argv[]){
     */
     //srand(time(NULL));
     //rand();
-    //float roleta = (float(rand()%10001) / 10000);
-    //cout<< roleta;
-    //float beta = 0;
-    //int a = 0;
 
     iterador ambiente1;
-    ambiente1.init(10, 1000, 8, true);
 
-    return 0;
+    // Argumentos:
+    /*
+    *   Número de Formigas
+    *   Número de Iterações
+    *   Número de Rainhas no tabuleiro
+    *   Realizar Resolução(caso passe como false o programa não tentará resolver)
+    */
+    ambiente1.init(25, 100, 25, true);
+
+
 }
 
 /*

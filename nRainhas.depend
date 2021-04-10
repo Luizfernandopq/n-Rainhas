@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1618016983 source:c:\users\luiz fernando\desktop\nrainhas\main.cpp
+1618054556 source:c:\users\luiz fernando\desktop\nrainhas\main.cpp
 	"ambiente.cpp"
 
 1618016615 c:\users\luiz fernando\desktop\nrainhas\tabuleiro.cpp
@@ -17,7 +17,7 @@
 	<iostream>
 	<cstdlib>
 
-1618018003 source:c:\users\luiz fernando\desktop\nrainhas\ambiente.cpp
+1618054706 source:c:\users\luiz fernando\desktop\nrainhas\ambiente.cpp
 	"formigueiro.cpp"
 
 1618016826 source:c:\users\luiz fernando\desktop\nrainhas\formigueiro.cpp
@@ -27,6 +27,6 @@
 	<ctime>
 	"tabuleiro.cpp"
 
-1618018003 c:\users\luiz fernando\desktop\nrainhas\ambiente.cpp
+1618054845 c:\users\luiz fernando\desktop\nrainhas\ambiente.cpp
 	"formigueiro.cpp"
 
