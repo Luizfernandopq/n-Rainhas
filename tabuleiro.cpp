@@ -20,7 +20,10 @@ struct tabuleiroRainha{
 
         for (int i = 0; i < nRainhas; i++){
             for (int j = 0; j< nRainhas; j++){
-                cout << matriz[nRainhas - (i+1)][j] << "   ";
+                if(matriz[i][j])
+                    cout << "w   ";  //nRainhas - (i+1)
+                else
+                    cout << "-   ";
             }
             cout << "\n" <<endl;
         }
@@ -28,10 +31,10 @@ struct tabuleiroRainha{
     }
 
     void colocaRainha(int x, int y){
-        matriz[y-1][x-1]++;
+        matriz[y][x]++;
     }
     void tiraRainha(int x, int y){
-        matriz[y-1][x-1]--;
+        matriz[y][x]--;
     }
 
     bool isGameOver(){

@@ -25,10 +25,12 @@ struct iterador{
                 for(int i = 0; i < iteracoes; i++){
                     melhorFormiga = iteracao(nFormigas, nRainhas);
                     if(melhorFormiga.atualizaPontuacao(false)){
-                        cout << "na iteração nº " << i+1 << endl;
+                        cout << "na iteracao " << i+1 << endl;
                         break;
                     }
+                    atualizaMatrizFeromonio(nRainhas, melhorFormiga);
                 }
+                melhorFormiga.imprimeTabuleiro();
             //imprimeProbabilidade(nRainhas);
 
             }
@@ -37,7 +39,9 @@ struct iterador{
     formiga iteracao(int nFormigas, int nRainhas){
 
         formiga melhorFormigaLocal;
+        melhorFormigaLocal.init(nRainhas);
         formiga f0;
+        f0.init(nRainhas);
         float roleta;
         int xy,x,y;
         srand(time(NULL));
@@ -45,27 +49,33 @@ struct iterador{
         for(int i = 0; i < nFormigas; i++){
             for(int j = 0; j < nRainhas; j++){
                 roleta = (float(rand()%10001) / 10000);
-                imprimeProbabilidade(nRainhas);
+                //imprimeProbabilidade(nRainhas);
                 xy = pesquisaPosXY(roleta, nRainhas);
-                cout<< "\n xy: "<< xy << "\n";
+                //cout<< "\n xy: "<< xy << "\n";
                 x = xy % nRainhas;
                 y = xy / nRainhas;
-                cout << "roleta2: " << x << " " << y << endl;
+                //cout << "roleta2: " << x << " " << y << endl;
 
-                //f0.adicionaCaminho(x, y, j);
+                f0.adicionaCaminho(x, y, j);
                 posicionaRainha(x, y, nRainhas);
                 if(f0.atualizaPontuacao(true)){
-                    cout << "\nA formiga nº " << i+1 << " obteve sucesso \n";
+                    cout << "\nA formiga " << i+1 << " obteve sucesso \n";
                     f0.imprimeCaminho();
-                    imprimeProbabilidade(nRainhas);
+                    //imprimeProbabilidade(nRainhas);
                     return f0;
                 }
                 if(!atualizaMatrizProbabilidade(nRainhas)){
                     break;
                 }
             }
-
+            if(f0.isMelhor(melhorFormigaLocal.pontuacao)){
+                melhorFormigaLocal.copiaFormiga(f0);
+                //cout<< "deu bom \n\n";
+            }
+            f0.reiniciaPontuacao();
+            inicializaProbabilidade(nRainhas);
         }
+        return melhorFormigaLocal;
     }
 
     void inicializaFeromonio(int nRainhas){
@@ -77,7 +87,6 @@ struct iterador{
     }
     void inicializaProbabilidade(int nRainhas){
 
-        inicializaFeromonio(nRainhas);
         srand(time(NULL));
         rand();
         float alfa, beta = 0;
@@ -115,7 +124,15 @@ struct iterador{
 
 
 
-    void atualizaMatrizFeromonio(){
+    void atualizaMatrizFeromonio(int nRainhas, formiga f){
+        for (int i = 0; i < nRainhas; i++){
+            for (int j = 0; j< nRainhas; j++){
+                matrizFeromonio[i][j] -= 0.02f;
+            }
+            if(i < f.pontuacao){
+                matrizFeromonio[f.caminhoY[i]][f.caminhoX[i]] += 0.4f;
+            }
+        }
     }
 
     float somaProbabilidade(int nRainhas){
@@ -167,7 +184,7 @@ struct iterador{
         bool ignore = false;
         for(int i = 0; i < nRainhas; i++){
             for(int j = 0; j < nRainhas; j++){
-                cout << "roleta: " << roleta << "   " << matrizProbabilidade[i][j] << "    " << i << " " << j << endl;
+                //cout << "roleta: " << roleta << "   " << matrizProbabilidade[i][j] << "    " << i << " " << j << endl;
 
                 if(roleta <= matrizProbabilidade[i][j] && matrizProbabilidade[i][j] != -1){
                     return i * nRainhas + j;

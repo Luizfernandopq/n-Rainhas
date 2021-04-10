@@ -1,31 +1,32 @@
 # depslib dependency file v1.0
-1617958542 source:c:\users\luiz fernando\desktop\nrainhas\main.cpp
-	"tabuleiro.cpp"
+1618016983 source:c:\users\luiz fernando\desktop\nrainhas\main.cpp
 	"ambiente.cpp"
 
-1617909541 c:\users\luiz fernando\desktop\nrainhas\tabuleiro.cpp
+1618016615 c:\users\luiz fernando\desktop\nrainhas\tabuleiro.cpp
 	<iostream>
 	<cstdlib>
 
-1617961471 c:\users\luiz fernando\desktop\nrainhas\formigueiro.cpp
+1618016826 c:\users\luiz fernando\desktop\nrainhas\formigueiro.cpp
 	<iostream>
 	<cstdlib>
 	<cmath>
 	<ctime>
+	"tabuleiro.cpp"
 
-1617909541 source:c:\users\luiz fernando\desktop\nrainhas\tabuleiro.cpp
+1618016615 source:c:\users\luiz fernando\desktop\nrainhas\tabuleiro.cpp
 	<iostream>
 	<cstdlib>
 
-1617959558 source:c:\users\luiz fernando\desktop\nrainhas\ambiente.cpp
+1618018003 source:c:\users\luiz fernando\desktop\nrainhas\ambiente.cpp
 	"formigueiro.cpp"
 
-1617961471 source:c:\users\luiz fernando\desktop\nrainhas\formigueiro.cpp
+1618016826 source:c:\users\luiz fernando\desktop\nrainhas\formigueiro.cpp
 	<iostream>
 	<cstdlib>
 	<cmath>
 	<ctime>
+	"tabuleiro.cpp"
 
-1617961825 c:\users\luiz fernando\desktop\nrainhas\ambiente.cpp
+1618018003 c:\users\luiz fernando\desktop\nrainhas\ambiente.cpp
 	"formigueiro.cpp"
 
